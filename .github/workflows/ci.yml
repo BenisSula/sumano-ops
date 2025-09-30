@@ -1,0 +1,202 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Code Linting
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2 libpango-1.0-0 libgdk-pixbuf2.0-0 libffi-dev
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ops_backend/requirements.txt
+      
+      - name: Run Black (code formatting)
+        run: |
+          black --check ops_backend/
+      
+      - name: Run isort (import sorting)
+        run: |
+          isort --check-only ops_backend/
+      
+      - name: Run Flake8 (linting)
+        run: |
+          flake8 ops_backend/
+
+  test:
+    runs-on: ubuntu-latest
+    name: Run Tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcairo2 libpango-1.0-0 libgdk-pixbuf2.0-0 libffi-dev
+      
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ops_backend/requirements.txt
+      
+      - name: Run Django migrations
+        run: |
+          cd ops_backend
+          python manage.py migrate --run-syncdb
+        env:
+          SECRET_KEY: test-secret-key
+          DEBUG: True
+          ALLOWED_HOSTS: localhost,127.0.0.1
+          DATABASE_URL: sqlite:///db.sqlite3
+      
+      - name: Run tests
+        run: |
+          cd ops_backend
+          pytest --cov=. --cov-report=xml
+        env:
+          SECRET_KEY: test-secret-key
+          DEBUG: True
+          ALLOWED_HOSTS: localhost,127.0.0.1
+          DATABASE_URL: sqlite:///db.sqlite3
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        run: |
+          docker build -t sumano-ops-backend:latest .
+      
+      - name: Test Docker image
+        run: |
+          docker run --rm -d --name test-container -p 8000:8000 \
+            -e SECRET_KEY=test-secret-key \
+            -e DEBUG=True \
+            -e ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0 \
+            -e DATABASE_URL=sqlite:///db.sqlite3 \
+            sumano-ops-backend:latest
+          
+          # Wait for container to start
+          sleep 10
+          
+          # Test health endpoint
+          curl -f http://localhost:8000/health/ || exit 1
+          
+          # Stop container
+          docker stop test-container
+
+  pdf-smoke-test:
+    runs-on: ubuntu-latest
+    name: PDF Generation Smoke Test
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run PDF smoke test
+        run: |
+          # Start the application in background
+          docker-compose up -d ops_backend
+          
+          # Wait for application to start
+          sleep 15
+          
+          # Test PDF generation
+          curl -o ci-sample.pdf http://localhost:8000/api/pdf/test/
+          
+          # Verify PDF was generated
+          if [ ! -f ci-sample.pdf ]; then
+            echo "PDF file was not generated"
+            exit 1
+          fi
+          
+          # Check if PDF contains expected content (basic validation)
+          if ! file ci-sample.pdf | grep -q "PDF"; then
+            echo "Generated file is not a valid PDF"
+            exit 1
+          fi
+          
+          echo "PDF smoke test passed - ci-sample.pdf generated successfully"
+          
+          # Clean up
+          docker-compose down
+
+  security-audit:
+    runs-on: ubuntu-latest
+    name: Security Audit
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+      
+      - name: Run security audit
+        run: |
+          pip-audit --requirement ops_backend/requirements.txt --desc
+
+  canonical-naming-check:
+    runs-on: ubuntu-latest
+    name: Canonical Naming Check
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check repository name
+        run: |
+          # This check will be done by the repository name itself
+          # We'll check for canonical naming in the codebase
+          if [ ! -d "ops_backend" ]; then
+            echo "ERROR: Django project must be named 'ops_backend'"
+            exit 1
+          fi
+          
+          if ! grep -q "ops_backend" docker-compose.yml; then
+            echo "ERROR: Docker service must be named 'ops_backend'"
+            exit 1
+          fi
+          
+          echo "Canonical naming check passed"
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    needs: [lint, test, build, pdf-smoke-test, security-audit, canonical-naming-check]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to production
+        run: |
+          echo "Deployment would happen here in a real scenario"
+          echo "All CI checks passed - ready for deployment"
