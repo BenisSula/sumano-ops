@@ -1,6 +1,6 @@
 # Sumano Operations Management System (OMS)
 
-A comprehensive operations management system built with Django backend and React frontend.
+A comprehensive operations management system for Sumano Tech's service delivery tracking and project management. Built with Django backend and designed to support our technology services (web development, mobile apps, OMS, portals, and audits).
 
 ## Project Structure
 
@@ -17,8 +17,9 @@ sumano-ops/
 
 ## Tech Stack
 
-- **Backend**: Python 3.11, Django 4.x
-- **Frontend**: React 18, React Router DOM, Axios
+- **Backend**: Python 3.11, Django 4.x, Django REST Framework
+- **Database**: PostgreSQL 14
+- **Frontend**: React 18, React Router DOM, Axios (future)
 - **Containerization**: Docker + Docker Compose
 - **CI/CD**: GitHub Actions
 - **PDF Generation**: WeasyPrint
@@ -30,7 +31,8 @@ sumano-ops/
 
 - Docker and Docker Compose
 - Python 3.11+ (for local development)
-- Node.js 18+ (for frontend development)
+- PostgreSQL 14+ (included in Docker setup)
+- Node.js 18+ (for future frontend development)
 
 ### Development Setup
 
@@ -64,6 +66,7 @@ sumano-ops/
    - Backend API: http://localhost:8000
    - Health Check: http://localhost:8000/health/
    - PDF Test: http://localhost:8000/api/pdf/test/
+   - PostgreSQL Database: localhost:5432 (user: postgres, password: postgres, db: sumano_ops)
 
 ### Local Development
 
@@ -73,6 +76,15 @@ cd ops_backend
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
+
+# Set up environment variables
+cp ../env.example .env
+# Edit .env with your configuration
+
+# Run migrations
+python manage.py migrate
+
+# Start development server
 python manage.py runserver
 ```
 
@@ -82,6 +94,23 @@ cd frontend
 npm install
 npm start
 ```
+
+## MVP Features
+
+This backend skeleton provides the foundation for Sumano Tech's service delivery tracking:
+
+### Service Delivery Tracking
+- **ServiceProject Model**: Track all client service delivery projects
+- **Service Types**: Web Development, Mobile Apps, Operations Systems, Portals, Audits
+- **Project Status**: Planning, In Progress, Testing, Delivered, Ongoing Support, Completed
+- **Client Management**: Track client names and project details
+
+### Core Infrastructure
+- Django REST Framework for API development
+- PostgreSQL database for reliable data storage
+- Docker containerization for consistent deployment
+- Comprehensive testing with pytest
+- Code quality tools (flake8, black)
 
 ## CI/CD Pipeline
 
