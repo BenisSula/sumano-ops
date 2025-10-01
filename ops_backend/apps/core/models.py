@@ -1,13 +1,18 @@
 """
-Core models for the Sumano Operations Management System MVP.
+Core models for the Sumano Operations Management System.
 
-This module contains placeholder models for Sumano Tech's service delivery tracking:
-- Client service delivery tracking
-- Project management for our development work
-- Service line categorization (web, mobile, OMS, portals, audits)
-- Basic company operations infrastructure
+This module provides the main entry point for all core models.
+Models are organized by domain in separate files for better maintainability.
 """
 
+# Import all models from their respective modules
+from .models.client import Client, Organization, Contact
+from .models.project import Project, ProjectPhase
+from .models.document import DocumentTemplate, DocumentInstance
+from .models.system import User, Role, Permission
+
+# Backward compatibility - keep the old ServiceProject model for now
+# TODO: Migrate existing ServiceProject data to new normalized structure
 import uuid
 from django.db import models
 
@@ -25,9 +30,10 @@ class TimeStampedModel(models.Model):
 
 class ServiceProject(TimeStampedModel):
     """
-    MVP placeholder model for Sumano Tech's service delivery tracking.
+    Legacy MVP placeholder model for Sumano Tech's service delivery tracking.
     
-    This model tracks our service delivery projects to clients across all service lines.
+    DEPRECATED: This model will be replaced by the normalized Project model.
+    Kept for backward compatibility during migration.
     """
     SERVICE_TYPES = [
         ('web_development', 'Website Development'),

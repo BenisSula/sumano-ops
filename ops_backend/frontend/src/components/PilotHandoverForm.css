@@ -1,0 +1,449 @@
+/* PilotHandoverForm.css */
+.pilot-handover-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e1e5e9;
+}
+
+.form-header h2 {
+  color: #2c5aa0;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.completion-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.completion-indicator span {
+  font-weight: 600;
+  color: #555;
+  min-width: 120px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 20px;
+  background-color: #e1e5e9;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #8bc34a 100%);
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.handover-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form-section {
+  background: #fff;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h3 {
+  color: #2c5aa0;
+  margin: 0 0 20px 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-bottom: 2px solid #f0f4f8;
+  padding-bottom: 10px;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.form-row label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e1e5e9;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: #2c5aa0;
+  box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+}
+
+.form-row input:disabled,
+.form-row select:disabled,
+.form-row textarea:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Checklist Styles */
+.checklist-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #2c5aa0;
+}
+
+.checklist-section h3 {
+  color: #2c5aa0;
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  border: none;
+  padding: 0;
+}
+
+.checklist-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #e1e5e9;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.checklist-item:hover {
+  background-color: #f0f4f8;
+  border-color: #2c5aa0;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2c5aa0;
+  cursor: pointer;
+}
+
+.checklist-label {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+.checklist-item input[type="checkbox"]:checked + .checklist-label {
+  color: #155724;
+  font-weight: 600;
+}
+
+/* Team Member Management */
+.team-member-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.team-member-row input {
+  flex: 1;
+}
+
+.remove-member-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.remove-member-btn:hover {
+  background: #c82333;
+}
+
+.add-member-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-member-btn:hover {
+  background: #218838;
+}
+
+/* Signature Section */
+.signature-container {
+  border: 2px solid #e1e5e9;
+  border-radius: 6px;
+  padding: 15px;
+  background: white;
+}
+
+.signature-canvas {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto 15px;
+  background: white;
+}
+
+.signature-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.signature-controls button {
+  padding: 8px 16px;
+  border: 1px solid #2c5aa0;
+  background: white;
+  color: #2c5aa0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.signature-controls button:hover {
+  background: #2c5aa0;
+  color: white;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 2px solid #f0f4f8;
+  margin-top: 20px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-cancel {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.btn-primary {
+  background: #2c5aa0;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #1e3f73;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #545b62;
+  transform: translateY(-1px);
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.btn-cancel {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-success:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Messages */
+.error-message,
+.success-message {
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loading-spinner {
+  font-size: 1.2rem;
+  color: #2c5aa0;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pilot-handover-form {
+    padding: 15px;
+  }
+  
+  .form-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .completion-indicator {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .progress-bar {
+    width: 150px;
+  }
+  
+  .checklist-items {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
+  
+  .signature-canvas {
+    width: 100%;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-section {
+    padding: 15px;
+  }
+  
+  .checklist-section {
+    padding: 15px;
+  }
+  
+  .team-member-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .signature-controls {
+    flex-direction: column;
+  }
+}
+
+/* Accessibility Improvements */
+.checklist-item:focus-within {
+  outline: 2px solid #2c5aa0;
+  outline-offset: 2px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: 2px solid #2c5aa0;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .checklist-item {
+    border-width: 2px;
+  }
+  
+  .progress-fill {
+    background: #000;
+  }
+  
+  .btn-primary,
+  .btn-secondary,
+  .btn-success,
+  .btn-cancel {
+    border: 2px solid currentColor;
+  }
+}

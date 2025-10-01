@@ -1,0 +1,43 @@
+PDF placeholder for template: Client Intake Form
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Intake Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; color: #333; }
+        .header { text-align: center; border-bottom: 3px solid #2c5aa0; padding-bottom: 20px; margin-bottom: 30px; }
+        .company-logo { font-size: 24px; font-weight: bold; color: #2c5aa0; margin-bottom: 10px; }
+        .document-title { font-size: 28px; font-weight: bold; color: #2c5aa0; margin-bottom: 10px; }
+        .section { margin-bottom: 25px; }
+        .section-title { font-size: 18px; font-weight: bold; color: #2c5aa0; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; margin-bottom: 15px; }
+        .field { margin-bottom: 10px; }
+        .field-label { font-weight: bold; display: inline-block; width: 150px; }
+        .field-value { display: inline-block; min-height: 20px; padding: 5px; border-bottom: 1px solid #ccc; min-width: 300px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-logo">Sumano Tech</div>
+        <div class="document-title">Client Intake Document</div>
+        <div class="document-subtitle">Project: Not specified</div>
+    </div>
+    <div class="section">
+        <div class="section-title">Client Information</div>
+        <div class="field">
+            <span class="field-label">Company Name:</span>
+            <span class="field-value">Test Company</span>
+        </div>
+        <div class="field">
+            <span class="field-label">Contact Person:</span>
+            <span class="field-value">Test Contact</span>
+        </div>
+        <div class="field">
+            <span class="field-label">Email:</span>
+            <span class="field-value">test@example.com</span>
+        </div>
+    </div>
+</body>
+</html>

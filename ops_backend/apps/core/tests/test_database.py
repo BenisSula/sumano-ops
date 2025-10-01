@@ -4,7 +4,7 @@ Database connection and model tests for Sumano OMS.
 from django.test import TestCase
 from django.db import connection
 from django.core.exceptions import ValidationError
-from apps.core.models import ServiceProject
+from apps.core.models import Organization, Client, Project, Contact
 
 
 class DatabaseConnectionTestCase(TestCase):
@@ -23,71 +23,66 @@ class DatabaseConnectionTestCase(TestCase):
         self.assertIn('sumano_ops', db_name)
 
 
-class ServiceProjectModelTestCase(TestCase):
-    """Test the ServiceProject model functionality."""
+class NormalizedModelsBasicTestCase(TestCase):
+    """Test basic functionality of normalized models."""
 
-    def test_service_project_creation(self):
-        """Test creating a ServiceProject instance."""
-        project = ServiceProject.objects.create(
-            project_name="Test Website Project",
-            service_type="web_development",
-            client_name="Test Client",
-            description="A test website development project",
-            status="PLANNING"
+    def test_organization_creation(self):
+        """Test creating an Organization instance."""
+        org = Organization.objects.create(
+            name="Test Organization",
+            organization_type="business",
+            email="contact@testorg.com"
         )
         
-        self.assertEqual(project.project_name, "Test Website Project")
-        self.assertEqual(project.service_type, "web_development")
-        self.assertEqual(project.client_name, "Test Client")
-        self.assertEqual(project.status, "PLANNING")
-        self.assertIsNotNone(project.id)
-        self.assertIsNotNone(project.created_at)
-        self.assertIsNotNone(project.updated_at)
+        self.assertEqual(org.name, "Test Organization")
+        self.assertEqual(org.organization_type, "business")
+        self.assertEqual(org.status, "prospect")  # default
+        self.assertIsNotNone(org.id)
+        self.assertIsNotNone(org.created_at)
+        self.assertIsNotNone(org.updated_at)
 
-    def test_service_type_choices(self):
-        """Test that service type choices are valid."""
-        valid_choices = [
-            'web_development',
-            'mobile_app',
-            'operations_system',
-            'portal',
-            'audit'
-        ]
+
+class NormalizedModelsTestCase(TestCase):
+    """Test the new normalized models functionality."""
+
+    def test_organization_creation(self):
+        """Test creating an Organization instance."""
+        org = Organization.objects.create(
+            name="Test Organization",
+            organization_type="business",
+            email="contact@testorg.com"
+        )
         
-        for choice in valid_choices:
-            project = ServiceProject.objects.create(
-                project_name=f"Test {choice}",
-                service_type=choice,
-                client_name="Test Client"
-            )
-            self.assertEqual(project.service_type, choice)
+        self.assertEqual(org.name, "Test Organization")
+        self.assertEqual(org.organization_type, "business")
+        self.assertEqual(org.status, "prospect")  # default
+        self.assertIsNotNone(org.id)
 
-    def test_service_project_string_representation(self):
-        """Test the string representation of ServiceProject."""
-        project = ServiceProject.objects.create(
+    def test_client_organization_relationship(self):
+        """Test Client-Organization relationship."""
+        org = Organization.objects.create(name="Test Org")
+        client = Client.objects.create(
+            organization=org,
+            client_since="2024-01-01"
+        )
+        
+        self.assertEqual(client.organization, org)
+        self.assertEqual(org.client_profile, client)
+
+    def test_project_client_relationship(self):
+        """Test Project-Client relationship."""
+        org = Organization.objects.create(name="Test Org")
+        client = Client.objects.create(
+            organization=org,
+            client_since="2024-01-01"
+        )
+        project = Project.objects.create(
+            client=client,
             project_name="Test Project",
             service_type="web_development",
-            client_name="Test Client"
+            start_date="2024-01-01"
         )
         
-        expected_str = "Test Project - Test Client (Website Development)"
-        self.assertEqual(str(project), expected_str)
-
-    def test_service_project_ordering(self):
-        """Test that ServiceProject instances are ordered by created_at descending."""
-        # Create projects with slight delays
-        project1 = ServiceProject.objects.create(
-            project_name="First Project",
-            service_type="web_development",
-            client_name="Client 1"
-        )
-        
-        project2 = ServiceProject.objects.create(
-            project_name="Second Project",
-            service_type="mobile_app",
-            client_name="Client 2"
-        )
-        
-        projects = ServiceProject.objects.all()
-        self.assertEqual(projects[0], project2)  # Most recent first
-        self.assertEqual(projects[1], project1)
+        self.assertEqual(project.client, client)
+        self.assertEqual(project.client_name, "Test Org")
+        self.assertIn(project, client.projects.all())

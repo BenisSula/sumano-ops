@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Request Authorization</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #fff;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c5aa0;
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+        .header .company-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .header .document-subtitle {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .section {
+            margin-bottom: 25px;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .section h2 {
+            color: #2c5aa0;
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+        .field-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        .field-label {
+            font-weight: bold;
+            color: #444;
+            width: 30%;
+            min-width: 150px;
+        }
+        .field-value {
+            flex-grow: 1;
+            color: #666;
+            padding: 5px 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .status-draft {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 2px solid #dee2e6;
+        }
+        .status-submitted {
+            background-color: #cce5ff;
+            color: #0066cc;
+            border: 2px solid #99ccff;
+        }
+        .status-under-review {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        .status-impact-assessed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+        .status-client-decision {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .decision-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .decision-proceed {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        .decision-defer {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        .decision-withdraw {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+        .impact-assessment {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .impact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .impact-item:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+        .impact-label {
+            flex-grow: 1;
+            font-weight: 500;
+            color: #333;
+        }
+        .impact-value {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .impact-yes {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .impact-no {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .impact-cost {
+            background-color: #e7f3ff;
+            color: #2c5aa0;
+            font-size: 1.1em;
+        }
+        .signature-section {
+            margin-top: 30px;
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
+        }
+        .signature-block {
+            display: inline-block;
+            width: 45%;
+            margin: 0 2%;
+            text-align: center;
+            vertical-align: top;
+        }
+        .signature-line {
+            border-bottom: 2px solid #000;
+            margin: 40px 0 5px 0;
+            height: 2px;
+        }
+        .signature-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .signature-info {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9em;
+            color: #999;
+        }
+        .request-details {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .request-text {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-logo">{{ system.company }}</div>
+        <h1>Change Request Authorization</h1>
+        <div class="document-subtitle">Formal Change Request Document</div>
+        <div class="document-subtitle">Generated: {{ system.date }}</div>
+    </div>
+
+    <div class="section">
+        <h2>Project Information</h2>
+        <div class="field-row">
+            <span class="field-label">Project Title:</span>
+            <span class="field-value">{{ data.project_title|default:"Not specified" }}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">Client Name:</span>
+            <span class="field-value">{{ data.client_name|default:"Not specified" }}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">Request Date:</span>
+            <span class="field-value">{{ data.request_date|default:"Not specified" }}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">Reference Agreement:</span>
+            <span class="field-value">{{ data.reference_agreement|default:"N/A" }}</span>
+        </div>
+        <div class="field-row">
+            <span class="field-label">Change Request ID:</span>
+            <span class="field-value">{{ data.change_request_id|default:"N/A" }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Request Status</h2>
+        <div style="text-align: center;">
+            <span class="status-badge status-{{ data.status|lower|replace:' ','-' }}">
+                {{ data.status|default:"Draft" }}
+            </span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Requested Change Details</h2>
+        <div class="request-details">
+            <div class="field-row">
+                <span class="field-label">Description:</span>
+                <div class="field-value request-text">{{ data.description|default:"No description provided" }}</div>
+            </div>
+            <div class="field-row">
+                <span class="field-label">Business Reason:</span>
+                <div class="field-value request-text">{{ data.reason|default:"No reason provided" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Provider Impact Assessment</h2>
+        <div class="impact-assessment">
+            <div class="impact-item">
+                <span class="impact-label">No Additional Cost Required</span>
+                <span class="impact-value impact-{{ data.no_additional_cost|lower }}">
+                    {{ data.no_additional_cost|default:"No" }}
+                </span>
+            </div>
+            <div class="impact-item">
+                <span class="impact-label">Requires Additional Effort</span>
+                <span class="impact-value impact-{{ data.requires_additional_effort|lower }}">
+                    {{ data.requires_additional_effort|default:"No" }}
+                </span>
+            </div>
+            <div class="impact-item">
+                <span class="impact-label">Estimated Time (Days)</span>
+                <span class="impact-value">
+                    {{ data.estimated_time|default:"N/A" }}
+                </span>
+            </div>
+            <div class="impact-item">
+                <span class="impact-label">Estimated Additional Cost</span>
+                <span class="impact-value impact-cost">
+                    ${{ data.estimated_cost|default:"0.00" }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Client Decision</h2>
+        <div style="text-align: center; margin: 20px 0;">
+            {% if data.decision and data.decision != 'Pending' %}
+                <span class="decision-badge decision-{{ data.decision|lower }}">
+                    {{ data.decision|default:"Pending Decision" }}
+                </span>
+            {% else %}
+                <span class="decision-badge decision-defer">Pending Decision</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Signatures</h2>
+        <div class="signature-section">
+            <div class="signature-block">
+                <div class="signature-label">Client Representative</div>
+                <div class="signature-line"></div>
+                <div class="signature-info">
+                    <div><strong>Name:</strong> {{ data.client_rep_name|default:"_________________" }}</div>
+                    <div><strong>Date:</strong> {{ data.client_rep_signed_date|default:"_________________" }}</div>
+                </div>
+            </div>
+            
+            <div class="signature-block">
+                <div class="signature-label">Provider Representative</div>
+                <div class="signature-line"></div>
+                <div class="signature-info">
+                    <div><strong>Name:</strong> {{ data.provider_name|default:"_________________" }}</div>
+                    <div><strong>Date:</strong> {{ data.provider_signed_date|default:"_________________" }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>This document authorizes the requested change to the pilot project.</div>
+        <div>Generated by Sumano Operations Management System | {{ system.company }} &copy; {{ system.current_year }}</div>
+        <div>Document generated on: {{ data.generation_date|default:system.date }}</div>
+    </div>
+</body>
+</html>

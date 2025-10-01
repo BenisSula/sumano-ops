@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Document</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #6f42c1;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .company-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6f42c1;
+            margin-bottom: 10px;
+        }
+        .document-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #6f42c1;
+            margin-bottom: 10px;
+        }
+        .document-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+        .section {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #6f42c1;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
+        .field-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+        .field-value {
+            display: inline-block;
+            min-height: 20px;
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+            min-width: 300px;
+        }
+        .legal-notice {
+            border: 2px solid #6f42c1;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f8f5ff;
+            font-style: italic;
+        }
+        .terms-section {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #6f42c1;
+        }
+        .signature-section {
+            margin-top: 40px;
+            border-top: 2px solid #6f42c1;
+            padding-top: 20px;
+        }
+        .signature-line {
+            border-bottom: 1px solid #000;
+            width: 300px;
+            margin: 20px 0 5px 0;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="company-logo">{{ system.company }}</div>
+        <div class="document-title">Legal Document</div>
+        <div class="document-subtitle">{{ data.document_type|default:"Legal Agreement" }}</div>
+    </div>
+
+    <div class="legal-notice">
+        <strong>IMPORTANT LEGAL NOTICE:</strong> This document contains legally binding terms and conditions. 
+        Please read carefully before signing. If you do not understand any part of this document, 
+        please consult with legal counsel.
+    </div>
+
+    <div class="section">
+        <div class="section-title">Parties</div>
+        
+        <div class="field">
+            <span class="field-label">First Party:</span>
+            <span class="field-value">{{ data.first_party|default:"Sumano Tech" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Second Party:</span>
+            <span class="field-value">{{ data.second_party|default:"Client" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Effective Date:</span>
+            <span class="field-value">{{ data.effective_date|default:"Not specified" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Term:</span>
+            <span class="field-value">{{ data.term|default:"As specified" }}</span>
+        </div>
+    </div>
+
+    <div class="terms-section">
+        <div class="section-title">Terms and Conditions</div>
+        
+        <div class="field">
+            <span class="field-label">Scope of Work:</span>
+            <span class="field-value">{{ data.scope_of_work|default:"As per agreement" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Payment Terms:</span>
+            <span class="field-value">{{ data.payment_terms|default:"As per agreement" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Intellectual Property:</span>
+            <span class="field-value">{{ data.intellectual_property|default:"Standard IP terms" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Confidentiality:</span>
+            <span class="field-value">{{ data.confidentiality|default:"Standard confidentiality terms" }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Legal Provisions</div>
+        
+        <div class="field">
+            <span class="field-label">Liability:</span>
+            <span class="field-value">{{ data.liability|default:"Limited liability as per law" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Indemnification:</span>
+            <span class="field-value">{{ data.indemnification|default:"Standard indemnification terms" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Dispute Resolution:</span>
+            <span class="field-value">{{ data.dispute_resolution|default:"Arbitration as per jurisdiction" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Governing Law:</span>
+            <span class="field-value">{{ data.governing_law|default:"Local jurisdiction" }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Special Provisions</div>
+        
+        <div class="field">
+            <span class="field-label">Force Majeure:</span>
+            <span class="field-value">{{ data.force_majeure|default:"Standard force majeure clause" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Termination:</span>
+            <span class="field-value">{{ data.termination|default:"Standard termination provisions" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Amendments:</span>
+            <span class="field-value">{{ data.amendments|default:"Written amendments only" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Severability:</span>
+            <span class="field-value">{{ data.severability|default:"Standard severability clause" }}</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Additional Terms</div>
+        
+        <div class="field">
+            <span class="field-label">Additional Clauses:</span>
+            <span class="field-value">{{ data.additional_clauses|default:"None" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Special Conditions:</span>
+            <span class="field-value">{{ data.special_conditions|default:"None" }}</span>
+        </div>
+        
+        <div class="field">
+            <span class="field-label">Witness Requirements:</span>
+            <span class="field-value">{{ data.witness_requirements|default:"As per law" }}</span>
+        </div>
+    </div>
+
+    <div class="signature-section">
+        <div class="section-title">Signatures</div>
+        
+        <div style="margin-bottom: 30px;">
+            <div>First Party ({{ data.first_party|default:"Sumano Tech" }}):</div>
+            <div class="signature-line"></div>
+            <div style="margin-left: 10px; font-size: 12px;">Name: {{ data.first_party_signature_name|default:"" }}</div>
+            <div style="margin-left: 10px; font-size: 12px;">Title: {{ data.first_party_title|default:"" }}</div>
+            <div style="margin-left: 10px; font-size: 12px;">Date: {{ data.first_party_signature_date|default:"" }}</div>
+        </div>
+        
+        <div style="margin-bottom: 30px;">
+            <div>Second Party ({{ data.second_party|default:"Client" }}):</div>
+            <div class="signature-line"></div>
+            <div style="margin-left: 10px; font-size: 12px;">Name: {{ data.second_party_signature_name|default:"" }}</div>
+            <div style="margin-left: 10px; font-size: 12px;">Title: {{ data.second_party_title|default:"" }}</div>
+            <div style="margin-left: 10px; font-size: 12px;">Date: {{ data.second_party_signature_date|default:"" }}</div>
+        </div>
+        
+        <div>
+            <div>Witness (if required):</div>
+            <div class="signature-line"></div>
+            <div style="margin-left: 10px; font-size: 12px;">Name: {{ data.witness_name|default:"" }}</div>
+            <div style="margin-left: 10px; font-size: 12px;">Date: {{ data.witness_date|default:"" }}</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Generated by {{ system.name }} v{{ system.version }}</p>
+        <p>Document generated on {{ generated_at|date:"F d, Y \a\t g:i A" }}</p>
+        <p><strong>This is a legally binding document. Please retain for your records.</strong></p>
+    </div>
+</body>
+</html>

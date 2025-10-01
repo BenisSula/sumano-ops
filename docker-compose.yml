@@ -60,5 +60,25 @@ services:
       timeout: 10s
       retries: 3
 
+  # React frontend for Sumano OMS
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sumano-ops-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000/api
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - ops_backend
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
 volumes:
   postgres_data:

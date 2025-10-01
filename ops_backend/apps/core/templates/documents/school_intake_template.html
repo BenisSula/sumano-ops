@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Pilot Project Intake Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5aa0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .company-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        
+        .document-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        
+        .document-subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c5aa0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .field-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        
+        .field-label {
+            font-weight: bold;
+            width: 180px;
+            min-width: 180px;
+            color: #555;
+        }
+        
+        .field-value {
+            flex: 1;
+            padding: 4px 8px;
+            border-bottom: 1px solid #ddd;
+            min-height: 20px;
+            word-wrap: break-word;
+        }
+        
+        .field-value.empty {
+            color: #999;
+            font-style: italic;
+        }
+        
+        .checkbox-list {
+            margin: 8px 0;
+        }
+        
+        .checkbox-item {
+            margin: 4px 0;
+            padding: 2px 0;
+        }
+        
+        .signature-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .signature-line {
+            margin: 20px 0;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .signature-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .project-type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 8px 0;
+        }
+        
+        .project-type-item {
+            padding: 4px 8px;
+            background-color: #f0f8ff;
+            border: 1px solid #d0e7ff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .timeline-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        
+        .financial-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 12px;
+            margin: 8px 0;
+        }
+        
+        .notes-section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 8px 0;
+            white-space: pre-wrap;
+        }
+        
+        @media print {
+            body { background-color: white; }
+            .container { box-shadow: none; }
+            .section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="company-logo">{{ system.company|default:"Sumano Tech" }}</div>
+            <div class="document-title">School Pilot Project Intake Form</div>
+            <div class="document-subtitle">Project: {{ data.school_name|default:"Not specified" }}</div>
+            <div class="document-subtitle">Generated: {{ data.submission_date|default:"Not specified" }}</div>
+        </div>
+
+        <!-- School Information Section -->
+        <div class="section">
+            <div class="section-title">School Information</div>
+            
+            <div class="field-row">
+                <div class="field-label">School Name:</div>
+                <div class="field-value">{{ data.school_name|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Address:</div>
+                <div class="field-value">{{ data.address|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Current Website:</div>
+                <div class="field-value">{{ data.current_website|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Number of Students:</div>
+                <div class="field-value">{{ data.number_of_students|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Number of Staff:</div>
+                <div class="field-value">{{ data.number_of_staff|default:"Not provided" }}</div>
+            </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="section">
+            <div class="section-title">Contact Information</div>
+            
+            <div class="field-row">
+                <div class="field-label">Contact Person:</div>
+                <div class="field-value">{{ data.contact_person|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Role/Position:</div>
+                <div class="field-value">{{ data.role_position|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Email:</div>
+                <div class="field-value">{{ data.email|default:"Not provided" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Phone/WhatsApp:</div>
+                <div class="field-value">{{ data.phone_whatsapp|default:"Not provided" }}</div>
+            </div>
+        </div>
+
+        <!-- Project Information Section -->
+        <div class="section">
+            <div class="section-title">Project Information</div>
+            
+            <div class="field-row">
+                <div class="field-label">Project Types:</div>
+                <div class="field-value">
+                    {% if data.project_type %}
+                        <div class="project-type-grid">
+                            {% for type in data.project_type|split:"," %}
+                                <div class="project-type-item">{{ type|title }}</div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="empty">Not specified</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Project Purposes:</div>
+                <div class="field-value">
+                    {% if data.project_purpose %}
+                        <div class="project-type-grid">
+                            {% for purpose in data.project_purpose|split:"," %}
+                                <div class="project-type-item">{{ purpose|title }}</div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="empty">Not specified</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Pilot Scope Features:</div>
+                <div class="field-value">
+                    {% if data.pilot_scope_features %}
+                        <div class="project-type-grid">
+                            {% for feature in data.pilot_scope_features|split:"," %}
+                                <div class="project-type-item">{{ feature|title }}</div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span class="empty">Not specified</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="section">
+            <div class="section-title">Project Timeline</div>
+            
+            <div class="timeline-info">
+                <div class="field-row">
+                    <div class="field-label">Timeline Preference:</div>
+                    <div class="field-value">{{ data.timeline_preference|default:"Not specified" }}</div>
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">Preferred Start Date:</div>
+                    <div class="field-value">{{ data.pilot_start_date|default:"Not specified" }}</div>
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">Expected End Date:</div>
+                    <div class="field-value">{{ data.pilot_end_date|default:"Not specified" }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Information Section -->
+        <div class="section">
+            <div class="section-title">Financial Commitment</div>
+            
+            <div class="financial-info">
+                <div class="field-row">
+                    <div class="field-label">Token Commitment Fee:</div>
+                    <div class="field-value">
+                        {% if data.token_commitment_fee and data.token_commitment_fee != "Not provided" %}
+                            ${{ data.token_commitment_fee }}
+                        {% else %}
+                            <span class="empty">Not specified</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="field-row">
+                    <div class="field-label">Content Availability:</div>
+                    <div class="field-value">{{ data.content_availability|default:"Not specified" }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Information Section -->
+        <div class="section">
+            <div class="section-title">Additional Information</div>
+            
+            <div class="field-row">
+                <div class="field-label">Additional Notes:</div>
+                <div class="field-value">
+                    {% if data.additional_notes and data.additional_notes != "None" %}
+                        <div class="notes-section">{{ data.additional_notes }}</div>
+                    {% else %}
+                        <span class="empty">No additional notes provided</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section">
+            <div class="section-title">Acknowledgment and Agreement</div>
+            
+            <div class="signature-line">
+                <div class="signature-label">Authorized Representative Signature:</div>
+                <div style="height: 40px; border-bottom: 1px solid #333; margin-top: 20px;"></div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Print Name:</div>
+                <div class="field-value">{{ data.contact_person|default:"________________" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Title:</div>
+                <div class="field-value">{{ data.role_position|default:"________________" }}</div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">Date:</div>
+                <div class="field-value">{{ data.submission_date|default:"________________" }}</div>
+            </div>
+            
+            <div style="margin-top: 20px; font-size: 14px; color: #666;">
+                <p><strong>By signing above, I acknowledge that:</strong></p>
+                <ul>
+                    <li>I have read and understand the terms of this pilot project intake form</li>
+                    <li>The information provided is accurate and complete</li>
+                    <li>I am authorized to represent the school in this matter</li>
+                    <li>I understand that this is a pilot project with specific scope and timeline</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>This document was generated by {{ system.company|default:"Sumano Tech" }} Operations Management System</p>
+            <p>For questions or support, please contact: support@sumano.com</p>
+            <p>Document ID: {{ data.document_id|default:"N/A" }} | Generated: {{ data.generation_date|default:"N/A" }}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -8,6 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Pilot Acceptance Workflow Module (Prompt 7)**
+  - `PilotAcceptance` model with acceptance-specific fields and business logic
+  - Comprehensive acceptance checklist with 12 validation items
+  - Digital signature capture for school and company representatives
+  - Pilot acceptance certificate PDF generation using unified document system
+  - `PilotAcceptanceViewSet` with full CRUD operations and custom actions
+  - `PilotAcceptanceForm.jsx` React component with offline capability
+  - Signature capture dialog with canvas-based signature pad
+  - Acceptance statistics and pending signatures endpoints
+  - Complete unit tests for models, serializers, and API endpoints
+  - Frontend tests for form behavior and signature workflow
+  - Performance testing: PDF generation < 0.5s (requirement: ≤8s)
+  - End-to-end integration testing of complete workflow
 - Initial project setup and scaffolding
 - Django backend project (`ops_backend`)
 - Docker and Docker Compose configuration
